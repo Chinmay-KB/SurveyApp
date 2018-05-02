@@ -7,6 +7,7 @@
     tools:context="surveyapp.thesmader.com.surveyapp.MainActivity">
 
     <EditText
+        android:id="@+id/subject_code"
         android:layout_width="@dimen/scode_width"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -23,19 +24,22 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
+        android:id="@+id/year_select"
         android:layout_width="@dimen/scode_width"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="216dp"
+        android:entries="@array/yearSelector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"/>
+        app:layout_constraintVertical_bias="0.0" />
 
     <Spinner
+        android:id="@+id/semester_select"
         android:layout_width="@dimen/scode_width"
         android:layout_height="40dp"
         android:layout_marginBottom="8dp"
@@ -46,7 +50,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.635">
+        app:layout_constraintVertical_bias="0.635"
+        android:entries="@array/semesterSelector">
 
     </Spinner>
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.898"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.936"
+        app:srcCompat="@android:drawable/ic_input_add" />
 </android.support.constraint.ConstraintLayout>
