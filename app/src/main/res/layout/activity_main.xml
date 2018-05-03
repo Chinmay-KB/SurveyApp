@@ -10,33 +10,27 @@
         android:id="@+id/subject_code"
         android:layout_width="@dimen/scode_width"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="132dp"
         android:hint="@string/subject_code"
         android:inputType="text"
         android:theme="@style/editText"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/year_select"
         android:layout_width="@dimen/scode_width"
         android:layout_height="40dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="36dp"
         android:entries="@array/yearSelector"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/subject_code" />
 
     <Spinner
         android:id="@+id/semester_select"
@@ -46,21 +40,22 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:entries="@array/semesterSelector"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.635"
-        android:entries="@array/semesterSelector">
+        app:layout_constraintTop_toBottomOf="@+id/year_select"
+        app:layout_constraintVertical_bias="0.101">
 
     </Spinner>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:focusable="true"
+        android:layout_width="52dp"
+        android:layout_height="56dp"
         android:clickable="true"
+        android:focusable="true"
+        android:onClick="dataEntry"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.898"
