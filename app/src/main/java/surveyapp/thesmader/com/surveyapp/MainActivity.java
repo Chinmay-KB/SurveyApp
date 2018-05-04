@@ -18,15 +18,15 @@ public class MainActivity extends AppCompatActivity {
     }
     public void dataEntry(View view)
     {
-       /* Intent enterData=new Intent(this,entryActivity.class);
+       entryActivity x=new entryActivity();
+
         EditText editText=(EditText)findViewById(R.id.subject_code);
         String message=editText.getText().toString();
         Spinner year_select=(Spinner)findViewById(R.id.year_select);
         message+=year_select.getSelectedItem().toString();
         Spinner semester_select=(Spinner)findViewById(R.id.semester_select);
         message+=semester_select.getSelectedItem().toString();
-        getIntent().putExtra(EXTRA_MESSAGE ,message);
-        startActivity(enterData); */
+        x.scode=message;
        startActivity(new Intent(this, entryActivity.class));
     }
 }
