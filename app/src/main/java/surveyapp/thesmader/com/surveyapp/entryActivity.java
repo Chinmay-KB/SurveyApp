@@ -19,12 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,21 +34,33 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
     public static int marksValue;
     public static int mainValue;
     public int index;
-    public TextView nestedTextView;
     public TextView serialNo;
     public TextView marksNo;
     public TextView wasteNo;
+    public String[] data;
+    public String[] keyOfData;
+    public TextView tv;
+    public TextView tv1;
+    public TextView tv2;
+    public TextView tv3;
+    public TextView tv4;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> user = new HashMap<>();
     private CollectionReference notebookRef;
 
-
-    @Override
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_entry);
-        nestedTextView=(TextView)findViewById(R.id.text_view_data);
-       notebookRef=db.collection(scode);
+        tv=(TextView)findViewById(R.id.textView);
+        tv1=(TextView)findViewById(R.id.textView2);
+        tv2=(TextView)findViewById(R.id.textView3);
+        tv3=(TextView)findViewById(R.id.textView4);
+        tv4=(TextView)findViewById(R.id.textView5);
+        data=new String[5];
+        keyOfData=new String[5];
+        notebookRef=db.collection(scode);
+        index=0;
         DocumentReference docRef = db.collection(scode).document("Last Accessed");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
@@ -67,8 +74,7 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
                         String interimID =task.getResult().getData().get("Last Index").toString();
                         if(interimID!=null) {
                             index = Integer.parseInt(interimID);
-                            loadNotes();
-                        }//dataLabel.setText(userName);
+                        }
                     } else {
                         Log.d("FirestoreDemo", "No such document");
                     }
@@ -78,7 +84,6 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
     });
-        //loadNotes();
     }
 
 public void onClick(View view)
@@ -93,13 +98,14 @@ public void onClick(View view)
                 user.put("Semester",semesterValue);
                 user.put("marks",marksValue);
                 user.put("Wasted paper",mainValue);
-                user.put("Index",index++);
+                user.put("Index",index);
                 db.collection(scode)
                         .add(user)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d("FirestoreDemo", "DocumentSnapshot added with ID "+ documentReference.getId());
+                                updateUI(documentReference.getId().toString()); // Pass on values over here
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -109,10 +115,7 @@ public void onClick(View view)
                             }
                         });
                 Toast.makeText(getApplicationContext(),Integer.toString(mainValue), Toast.LENGTH_SHORT).show();
-                setContentView(R.layout.page_entry);
-                Note note=new Note(marksValue,mainValue,0,index-1);
-                notebookRef.add(note);
-               // loadNotes();
+               // setContentView(R.layout.page_entry);
 
 
 }
@@ -144,38 +147,37 @@ public void savingData(View view)
 
     goBack(view);
 }
-    public void loadNotes() {
-        notebookRef.whereGreaterThanOrEqualTo("Index", 0)
-                .orderBy("Index", Query.Direction.DESCENDING)
-                .limit(5)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        String data = " ";
-
-                        for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                            Note note = documentSnapshot.toObject(Note.class);
-                            note.setDocumentId(documentSnapshot.getId());
-
-                            String documentId = note.getDocumentId();
-                            int index=note.getIndex();
-                            int marks = note.getMarks();
-                            int mainSheet= note.getMainSheet();
-                            int suppSheet = note.getSuppSheet();
-
-                            data += "ID: " + documentId
-                                    + "\nIndex: " + index + "\n Marks" +marks
-                                    + "\nPaper wasted" +mainSheet+suppSheet + "\n\n";
-                        }
-
-                        nestedTextView.setText("Trial");
-                    }
-                });
-       // marks.setText("");
-       // paper1.setText("");
-       // paper2.setText("");
+public void updateUI(String key)
+{
+    if(index<5)
+    {
+        data[index]="Marks:"+ Integer.toString(marksValue)+"Waste paper"+ Integer.toString(mainValue);
+        keyOfData[index]=key;
     }
+    else{
+        data[0]=data[1];
+        data[1]=data[2];
+        data[2]=data[3];
+        data[3]=data[4];
+        keyOfData[0]=keyOfData[1];
+        keyOfData[1]=keyOfData[2];
+        keyOfData[2]=keyOfData[3];
+        keyOfData[3]=keyOfData[4];
+        keyOfData[4]=key;
+        data[4]="Marks:"+ Integer.toString(marksValue)+"Waste paper"+ Integer.toString(mainValue);
+    }
+    if(data[0]!=null)
+        tv.setText(data[0]);
+    if(data[1]!=null)
+        tv1.setText(data[1]);
+    if(data[2]!=null)
+        tv2.setText(data[2]);
+    if(data[3]!=null)
+        tv3.setText(data[3]);
+    if(data[4]!=null)
+        tv4.setText(data[4]);
+    index++;
+}
 
 public void goBack(View view)
 {
