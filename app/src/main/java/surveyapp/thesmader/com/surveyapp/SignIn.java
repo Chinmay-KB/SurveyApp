@@ -59,6 +59,7 @@ public class SignIn extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){
                     startActivity(new Intent(SignIn.this, MainActivity.class));
+                    finish();
                 }
             }
         };
@@ -125,5 +126,10 @@ public class SignIn extends AppCompatActivity {
                         // ...
                     }
                 });
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
     }
 }
