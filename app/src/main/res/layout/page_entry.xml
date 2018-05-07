@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+=======
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+<<<<<<< HEAD
 
     <EditText
         android:id="@+id/marks_entry"
         android:layout_width="154dp"
         android:layout_height="48dp"
+=======
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/student_number"/>
+
+    <EditText
+        android:id="@+id/marks_entry"
+        android:layout_width="151dp"
+        android:layout_height="38dp"
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -17,10 +34,17 @@
         android:inputType="number"
         app:layout_constraintBottom_toTopOf="@+id/main_paper_wastage"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+=======
+        app:layout_constraintHorizontal_bias="0.455"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.964" />
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
 
     <EditText
         android:id="@+id/main_paper_wastage"
@@ -34,10 +58,15 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.866" />
+=======
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
 
     <EditText
         android:id="@+id/extra_paper_wastage"
@@ -51,10 +80,16 @@
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+<<<<<<< HEAD
         app:layout_constraintHorizontal_bias="0.125"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_paper_wastage"
         app:layout_constraintVertical_bias="0.953" />
+=======
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_paper_wastage"
+        app:layout_constraintVertical_bias="0.094" />
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/floatingActionButton2"
@@ -65,14 +100,18 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:clickable="true"
+<<<<<<< HEAD
         android:focusable="true"
         android:onClick="onClick"
+=======
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.975"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.937"
+<<<<<<< HEAD
         app:srcCompat="@android:drawable/ic_menu_save" />
 
     <android.support.design.widget.FloatingActionButton
@@ -180,4 +219,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.473" />
 
+=======
+        app:srcCompat="@android:drawable/ic_menu_save"
+        android:onClick="onClick"
+        android:focusable="true"/>
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
 </android.support.constraint.ConstraintLayout>

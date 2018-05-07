@@ -1,5 +1,6 @@
 package surveyapp.thesmader.com.surveyapp;
 
+<<<<<<< HEAD
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.ContactsContract;
@@ -7,16 +8,36 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+=======
+import android.app.NotificationManager;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.gms.tasks.OnSuccessListener;
+=======
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,6 +49,7 @@ import java.util.Map;
  */
 
 public class entryActivity extends AppCompatActivity implements View.OnClickListener{
+<<<<<<< HEAD
    public static String scode;
     public static String semesterValue;
     public static String yearValue;
@@ -84,10 +106,23 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
     });
+=======
+   // EditText max = (EditText) findViewById(R.id.extra_paper_wastage);
+    public static String scode;
+    public String slno;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    Map<String, Object> user = new HashMap<>();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.page_entry);
+        slno="0";
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
     }
 
 public void onClick(View view)
 {
+<<<<<<< HEAD
                  EditText marks=(EditText)findViewById(R.id.marks_entry);
                  EditText paper1=(EditText)findViewById(R.id.main_paper_wastage);
 
@@ -100,12 +135,31 @@ public void onClick(View view)
                 user.put("Wasted paper",mainValue);
                 user.put("Index",index);
                 db.collection(scode)
+=======
+
+   /* max.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+            if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+               // Log.i(TAG,"Enter pressed"); */
+                EditText marks=(EditText)findViewById(R.id.marks_entry);
+                String markNote=marks.getText().toString();
+                EditText paper1=(EditText)findViewById(R.id.main_paper_wastage);
+                EditText paper2=(EditText)findViewById(R.id.extra_paper_wastage);
+                String wastage=paper1.getText().toString() + "+";
+                String s = wastage+ paper2.getText().toString();
+                user.put("marks",markNote);
+                db.collection(scode)
+                       // .document(slno)
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
                         .add(user)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
                             public void onSuccess(DocumentReference documentReference) {
                                 Log.d("FirestoreDemo", "DocumentSnapshot added with ID "+ documentReference.getId());
+<<<<<<< HEAD
                                 updateUI(documentReference.getId().toString()); // Pass on values over here
+=======
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -114,6 +168,7 @@ public void onClick(View view)
                                 Log.w("FirestoreDemo", "Error adding document", e);
                             }
                         });
+<<<<<<< HEAD
                 Toast.makeText(getApplicationContext(),Integer.toString(mainValue), Toast.LENGTH_SHORT).show();
                // setContentView(R.layout.page_entry);
 
@@ -179,6 +234,18 @@ public void updateUI(String key)
     index++;
 }
 
+=======
+                slno=Integer.toString(Integer.parseInt(slno)+1);
+                Toast.makeText(getApplicationContext(),markNote+ " " + s, Toast.LENGTH_SHORT).show();
+                setContentView(R.layout.page_entry);
+                recreate();
+          /*  }
+            return false;
+        }
+    }); */
+
+}
+>>>>>>> 9e22a725a7e21f16bb6c7da34b2f48e364ec9228
 public void goBack(View view)
 {
     startActivity(new Intent(this, MainActivity.class));
