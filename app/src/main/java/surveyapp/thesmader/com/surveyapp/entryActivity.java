@@ -33,6 +33,9 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
     public static String yearValue;
     public static int marksValue;
     public static int mainValue;
+    public static int sup1;
+    public static int sup2;
+    public static int sup3;
     public int index;
     public TextView serialNo;
     public TextView marksNo;
@@ -75,6 +78,61 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
                         if(interimID!=null) {
                             index = Integer.parseInt(interimID);
                         }
+                     /*   String d0=task.getResult().getData().get("data0").toString();
+                        String k0=task.getResult().getData().get("key0").toString();
+                        String d1=task.getResult().getData().get("data1").toString();
+                        String k1=task.getResult().getData().get("key1").toString();
+                        String d2=task.getResult().getData().get("data2").toString();
+                        String k2=task.getResult().getData().get("key2").toString();
+                        String d3=task.getResult().getData().get("data3").toString();
+                        String k3=task.getResult().getData().get("key3").toString();
+                        String d4=task.getResult().getData().get("data4").toString();
+                        String k4=task.getResult().getData().get("key4").toString(); */
+                        if(task.getResult().getData().get("data0")!=null)
+                        {
+                            String d0=task.getResult().getData().get("data0").toString();
+                            String k0=task.getResult().getData().get("key0").toString();
+                            data[0]=d0;
+                            keyOfData[0]=k0;
+                        }
+                        if(task.getResult().getData().get("data1")!=null)
+                        {
+                            String d1=task.getResult().getData().get("data1").toString();
+                            String k1=task.getResult().getData().get("key1").toString();
+                            data[1]=d1;
+                            keyOfData[1]=k1;
+                        }
+                        if(task.getResult().getData().get("data2")!=null)
+                        {
+                            String d2=task.getResult().getData().get("data2").toString();
+                            String k2=task.getResult().getData().get("key2").toString();
+                            data[2]=d2;
+                            keyOfData[2]=k2;
+                        }
+                        if(task.getResult().getData().get("data3")!=null)
+                        {
+                            String d3=task.getResult().getData().get("data3").toString();
+                            String k3=task.getResult().getData().get("key3").toString();
+                            data[3]=d3;
+                            keyOfData[3]=k3;
+                        }
+                        if(task.getResult().getData().get("data4")!=null)
+                        {
+                            String d4=task.getResult().getData().get("data4").toString();
+                            String k4=task.getResult().getData().get("key4").toString();
+                            data[4]=d4;
+                            keyOfData[4]=k4;
+                        }
+                        if(data[0]!=null)
+                            tv.setText(data[0]);
+                        if(data[1]!=null)
+                            tv1.setText(data[1]);
+                        if(data[2]!=null)
+                            tv2.setText(data[2]);
+                        if(data[3]!=null)
+                            tv3.setText(data[3]);
+                        if(data[4]!=null)
+                            tv4.setText(data[4]);
                     } else {
                         Log.d("FirestoreDemo", "No such document");
                     }
@@ -90,31 +148,43 @@ public void onClick(View view)
 {
                  EditText marks=(EditText)findViewById(R.id.marks_entry);
                  EditText paper1=(EditText)findViewById(R.id.main_paper_wastage);
+                 EditText paper2=(EditText)findViewById(R.id.extra_paper_wastage);
+                 EditText paper3=(EditText)findViewById(R.id.extra_paper_wastage3);
+                 EditText paper4=(EditText)findViewById(R.id.extra_paper_wastage4);
 
-                  EditText paper2=(EditText)findViewById(R.id.extra_paper_wastage);
-                marksValue=Integer.parseInt(marks.getText().toString());
-                mainValue=Integer.parseInt(paper1.getText().toString()) + Integer.parseInt(paper2.getText().toString());
-                user.put("Year",yearValue);
-                user.put("Semester",semesterValue);
-                user.put("marks",marksValue);
-                user.put("Wasted paper",mainValue);
-                user.put("Index",index);
-                db.collection(scode)
-                        .add(user)
-                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                            @Override
-                            public void onSuccess(DocumentReference documentReference) {
-                                Log.d("FirestoreDemo", "DocumentSnapshot added with ID "+ documentReference.getId());
-                                updateUI(documentReference.getId().toString()); // Pass on values over here
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) {
-                                Log.w("FirestoreDemo", "Error adding document", e);
-                            }
-                        });
-                Toast.makeText(getApplicationContext(),Integer.toString(mainValue), Toast.LENGTH_SHORT).show();
+                if(!marks.getText().toString() .isEmpty() && !paper1.getText().toString().isEmpty() && !paper2.getText().toString().isEmpty() && !paper3.getText().toString().isEmpty() && !paper4.getText().toString().isEmpty()) {
+                    marksValue=Integer.parseInt(marks.getText().toString());
+                    mainValue=Integer.parseInt(paper1.getText().toString());
+                    sup1=Integer.parseInt(paper2.getText().toString());
+                    sup2=Integer.parseInt(paper3.getText().toString());
+                    sup3=Integer.parseInt(paper4.getText().toString());
+                    user.put("Year", yearValue);
+                    user.put("Semester", semesterValue);
+                    user.put("marks", marksValue);
+                    user.put("Main sheet wasted", mainValue);
+                    user.put("Supplementary 1", sup1);
+                    user.put("Supplementary 2",sup2);
+                    user.put("Supplementary 3",sup3);
+                    user.put("Index", index);
+                    db.collection(scode)
+                            .add(user)
+                            .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                @Override
+                                public void onSuccess(DocumentReference documentReference) {
+                                    Log.d("FirestoreDemo", "DocumentSnapshot added with ID " + documentReference.getId());
+                                    updateUI(documentReference.getId().toString()); // Pass on values over here
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.w("FirestoreDemo", "Error adding document", e);
+                                }
+                            });
+                    Toast.makeText(getApplicationContext(), Integer.toString(mainValue), Toast.LENGTH_SHORT).show();
+                }
+                else
+                    Toast.makeText(getApplicationContext(), "Don't leave the fields blank",Toast.LENGTH_SHORT).show();
                // setContentView(R.layout.page_entry);
 
 
@@ -127,7 +197,26 @@ public void savingData(View view)
     user.put("Last Semester",semesterValue);
     user.put("Last Year value",yearValue);
     user.put("Index",-1);
-
+    if(data[0]!=null && keyOfData[0]!=null){
+    user.put("data0",data[0]);
+    user.put("key0",keyOfData[0]);
+}
+    if(data[1]!=null && keyOfData[1]!=null){
+        user.put("data1",data[1]);
+        user.put("key1",keyOfData[1]);
+    }
+    if(data[2]!=null && keyOfData[2]!=null){
+        user.put("data2",data[2]);
+        user.put("key2",keyOfData[2]);
+    }
+    if(data[3]!=null && keyOfData[3]!=null){
+        user.put("data3",data[3]);
+        user.put("key3",keyOfData[3]);
+    }
+    if(data[4]!=null && keyOfData[4]!=null){
+        user.put("data4",data[4]);
+        user.put("key4",keyOfData[4]);
+    }
     db.collection(scode)
             .document("Last Accessed")//Stores the credentials of the last worked upon tab
             .set(user)
@@ -151,7 +240,7 @@ public void updateUI(String key)
 {
     if(index<5)
     {
-        data[index]="Marks:"+ Integer.toString(marksValue)+"Waste paper"+ Integer.toString(mainValue);
+        data[index]="#"+ Integer.toString(index+1)+" Marks:"+ Integer.toString(marksValue)+" Main "+ Integer.toString(mainValue)+" S1 "+ Integer.toString(sup1)+ " S2 "+ Integer.toString(sup2)+ " S3 "+Integer.toString(sup3);
         keyOfData[index]=key;
     }
     else{
@@ -164,7 +253,7 @@ public void updateUI(String key)
         keyOfData[2]=keyOfData[3];
         keyOfData[3]=keyOfData[4];
         keyOfData[4]=key;
-        data[4]="Marks:"+ Integer.toString(marksValue)+"Waste paper"+ Integer.toString(mainValue);
+        data[4]="#"+ Integer.toString(index+1)+" Marks:"+ Integer.toString(marksValue)+" Main "+ Integer.toString(mainValue)+" S1 "+ Integer.toString(sup1)+ " S2 "+ Integer.toString(sup2)+ " S3 "+Integer.toString(sup3);
     }
     if(data[0]!=null)
         tv.setText(data[0]);

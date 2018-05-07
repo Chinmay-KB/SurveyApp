@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     tools:context="surveyapp.thesmader.com.surveyapp.MainActivity">
 
-    <EditText
+    <EditText android:fontFamily="@font/q"
         android:id="@+id/subject_code"
         android:layout_width="@dimen/scode_width"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/subject_code"
         android:inputType="text"
         android:theme="@style/editText"
@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
+    <Spinner android:fontFamily="@font/q"
         android:id="@+id/year_select"
         android:layout_width="@dimen/scode_width"
         android:layout_height="40dp"
@@ -32,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subject_code" />
 
-    <Spinner
+    <Spinner android:fontFamily="@font/q"
         android:id="@+id/semester_select"
         android:layout_width="@dimen/scode_width"
         android:layout_height="40dp"
@@ -63,4 +63,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.936"
         app:srcCompat="@android:drawable/ic_input_add" />
+
 </android.support.constraint.ConstraintLayout>
