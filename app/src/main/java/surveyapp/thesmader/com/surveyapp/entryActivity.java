@@ -78,16 +78,6 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
                         if(interimID!=null) {
                             index = Integer.parseInt(interimID);
                         }
-                     /*   String d0=task.getResult().getData().get("data0").toString();
-                        String k0=task.getResult().getData().get("key0").toString();
-                        String d1=task.getResult().getData().get("data1").toString();
-                        String k1=task.getResult().getData().get("key1").toString();
-                        String d2=task.getResult().getData().get("data2").toString();
-                        String k2=task.getResult().getData().get("key2").toString();
-                        String d3=task.getResult().getData().get("data3").toString();
-                        String k3=task.getResult().getData().get("key3").toString();
-                        String d4=task.getResult().getData().get("data4").toString();
-                        String k4=task.getResult().getData().get("key4").toString(); */
                         if(task.getResult().getData().get("data0")!=null)
                         {
                             String d0=task.getResult().getData().get("data0").toString();
@@ -267,7 +257,10 @@ public void updateUI(String key)
         tv4.setText(data[4]);
     index++;
 }
-
+public void onBackPressed(View view)
+{
+    savingData(view);
+}
 public void goBack(View view)
 {
     startActivity(new Intent(this, MainActivity.class));

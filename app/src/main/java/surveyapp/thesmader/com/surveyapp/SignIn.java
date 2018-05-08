@@ -27,9 +27,11 @@ public class SignIn extends AppCompatActivity {
 
     SignInButton button;
     FirebaseAuth mAuth;
+    FirebaseUser user;
     private final static int RC_SIGN_IN = 2;
     GoogleApiClient mGoogleApiClient;
     FirebaseAuth.AuthStateListener mAuthListener;
+    public String email,name;
 
     @Override
     protected void onStart() {
@@ -45,6 +47,9 @@ public class SignIn extends AppCompatActivity {
 
         button = findViewById(R.id.googleBtn);
         mAuth = FirebaseAuth.getInstance();
+        user=FirebaseAuth.getInstance().getCurrentUser();
+        name=user.getDisplayName();
+        email=user.getEmail();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +62,13 @@ public class SignIn extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){
-                    startActivity(new Intent(SignIn.this, MainActivity.class));
+                    user=FirebaseAuth.getInstance().getCurrentUser();
+                    name=user.getDisplayName();
+                    email=user.getEmail();
+                    interimActivity ob=new interimActivity();
+                    ob.name=name;
+                    ob.email=email;
+                    startActivity(new Intent(SignIn.this, interimActivity.class));
                 }
             }
         };
