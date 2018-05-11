@@ -1,8 +1,10 @@
 package surveyapp.thesmader.com.surveyapp;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.view.View;
@@ -43,6 +45,11 @@ public class interimActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
+        ConstraintLayout constraintLayout = findViewById(R.id.entryanim);
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(5000);
+        animationDrawable.setExitFadeDuration(5000);
+        animationDrawable.start();
         FirebaseUser users= FirebaseAuth.getInstance().getCurrentUser();
         namev=(TextView)findViewById(R.id.textView6);
         mailv=(TextView)findViewById(R.id.textView7);
@@ -64,7 +71,7 @@ public class interimActivity extends AppCompatActivity {
                                 namesList.add(s);
                             }
                         }
-                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_selectable_list_item,namesList);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.custom_list,namesList);
                         adapter.notifyDataSetChanged();
                         listView.setAdapter(adapter);
                         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
