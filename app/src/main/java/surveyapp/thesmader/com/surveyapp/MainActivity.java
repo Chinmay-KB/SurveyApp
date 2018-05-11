@@ -52,12 +52,12 @@ public class MainActivity extends AppCompatActivity {
         x.scode = subjectCode;
         x.semesterValue = semesterValue;
         x.yearValue = yearValue;
+        FirebaseUser users=FirebaseAuth.getInstance().getCurrentUser();;
         if (yearValue.equals("Choose Year") || semesterValue.equals("Choose Semester"))
             Toast.makeText(getApplicationContext(), "Please provide appropriate input", Toast.LENGTH_SHORT).show();
         else {
-            //DocumentReference docRef = db.collection(email).document("Last Accessed");
-            user.put("Data",subjectCode+" "+ yearValue+ " "+ semesterValue);
-            db.collection("email")
+            user.put("Data",subjectCode.toUpperCase()+" "+ yearValue+ " "+ semesterValue);
+            db.collection(users.getEmail())
                     .add(user)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                         @Override
@@ -72,9 +72,12 @@ public class MainActivity extends AppCompatActivity {
                             Log.w("FirestoreDemo", "Error adding document", e);
                         }
                     });
-            startActivity(new Intent(this, entryActivity.class));
+            Intent i=new Intent(getApplicationContext(),entryActivity.class);
+            i.putExtra("subject",subjectCode);
+            i.putExtra("year",yearValue);
+            i.putExtra("semester",semesterValue);
+            startActivity(i);
         }
 
-        }
     }
-
+}

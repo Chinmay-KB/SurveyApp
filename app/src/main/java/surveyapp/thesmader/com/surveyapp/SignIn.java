@@ -48,8 +48,6 @@ public class SignIn extends AppCompatActivity {
         button = findViewById(R.id.googleBtn);
         mAuth = FirebaseAuth.getInstance();
         user=FirebaseAuth.getInstance().getCurrentUser();
-        name=user.getDisplayName();
-        email=user.getEmail();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +61,6 @@ public class SignIn extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 if (firebaseAuth.getCurrentUser() != null){
                     user=FirebaseAuth.getInstance().getCurrentUser();
-                    name=user.getDisplayName();
-                    email=user.getEmail();
-                    interimActivity ob=new interimActivity();
-                    ob.name=name;
-                    ob.email=email;
                     startActivity(new Intent(SignIn.this, interimActivity.class));
                 }
             }

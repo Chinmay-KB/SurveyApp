@@ -55,6 +55,10 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_entry);
+        Intent i=getIntent();
+        scode=i.getStringExtra("subject");
+        yearValue=i.getStringExtra("year");
+        semesterValue=i.getStringExtra("semester");
         tv=(TextView)findViewById(R.id.textView);
         tv1=(TextView)findViewById(R.id.textView2);
         tv2=(TextView)findViewById(R.id.textView3);
@@ -148,6 +152,7 @@ public void onClick(View view)
                     sup1=Integer.parseInt(paper2.getText().toString());
                     sup2=Integer.parseInt(paper3.getText().toString());
                     sup3=Integer.parseInt(paper4.getText().toString());
+
                     user.put("Year", yearValue);
                     user.put("Semester", semesterValue);
                     user.put("marks", marksValue);
@@ -171,7 +176,13 @@ public void onClick(View view)
                                     Log.w("FirestoreDemo", "Error adding document", e);
                                 }
                             });
+
                     Toast.makeText(getApplicationContext(), Integer.toString(mainValue), Toast.LENGTH_SHORT).show();
+                    marks.setText("");
+                    paper1.setText((""));
+                    paper2.setText("");
+                    paper3.setText("");
+                    paper4.setText("");
                 }
                 else
                     Toast.makeText(getApplicationContext(), "Don't leave the fields blank",Toast.LENGTH_SHORT).show();
@@ -256,6 +267,7 @@ public void updateUI(String key)
     if(data[4]!=null)
         tv4.setText(data[4]);
     index++;
+
 }
 public void onBackPressed(View view)
 {
@@ -263,7 +275,7 @@ public void onBackPressed(View view)
 }
 public void goBack(View view)
 {
-    startActivity(new Intent(this, MainActivity.class));
+    startActivity(new Intent(this, interimActivity.class));
     finish();
 }
 
