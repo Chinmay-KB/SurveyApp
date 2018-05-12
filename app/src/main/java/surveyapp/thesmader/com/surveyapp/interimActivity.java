@@ -86,7 +86,7 @@ public class interimActivity extends AppCompatActivity {
                                 i.putExtra("subject",scode);
                                 i.putExtra("year",year);
                                 i.putExtra("semester",sem);
-                                getApplicationContext().startActivity(i);
+                                startActivity(i);
 
                                 Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
 
