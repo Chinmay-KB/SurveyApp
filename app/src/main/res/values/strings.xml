@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SurveyApp</string>
+    <string name="app_name">Paver</string>
     <string name="s_no">S.no.</string>
     <string name="year">Year</string>
     <string name="subject_code">Subject Code</string>

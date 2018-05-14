@@ -1,12 +1,19 @@
 package surveyapp.thesmader.com.surveyapp;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,16 +34,58 @@ public class MainActivity extends AppCompatActivity {
     public String yearValue;
     public String semesterValue;
     public String email;
+    public RadioGroup stream1,stream2;
+    String midendsem,stream;
     private FirebaseAuth mAuth;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> user = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ConstraintLayout constraintLayout = findViewById(R.id.main_anim);
+        AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(5000);
+        animationDrawable.setExitFadeDuration(5000);
+        animationDrawable.start();
+        stream1=(RadioGroup)findViewById(R.id.stream1);
+        stream2=(RadioGroup)findViewById(R.id.stream2);
         mAuth = FirebaseAuth.getInstance();
 
+
+    }
+    public void addMSListener(View view)
+    {
+        RadioGroup midend=(RadioGroup)findViewById(R.id.sem);
+        int selectedId=midend.getCheckedRadioButtonId();
+        RadioButton rb=findViewById(selectedId);
+        midendsem=rb.getText().toString();
+        Toast.makeText(MainActivity.this,
+                rb.getText(), Toast.LENGTH_SHORT).show();
+    }
+    public void streamChoice1(View view)
+    {
+
+       int selectedId=stream1.getCheckedRadioButtonId();
+        RadioButton rb=findViewById(selectedId);
+        stream=rb.getText().toString();
+        stream2.clearCheck();
+        Toast.makeText(MainActivity.this,
+                rb.getText(), Toast.LENGTH_SHORT).show();
+    }
+    public void streamChoice2(View view)
+    {
+
+        int selectedId=stream2.getCheckedRadioButtonId();
+        RadioButton rb=findViewById(selectedId);
+        stream=rb.getText().toString();
+        stream1.clearCheck();
+        Toast.makeText(MainActivity.this,
+                rb.getText(), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -53,10 +102,12 @@ public class MainActivity extends AppCompatActivity {
         x.semesterValue = semesterValue;
         x.yearValue = yearValue;
         FirebaseUser users=FirebaseAuth.getInstance().getCurrentUser();;
-        if (yearValue.equals("Choose Year") || semesterValue.equals("Choose Semester"))
+        if (yearValue.equals("Choose Year") || semesterValue.equals("Choose Semester") || midendsem==null || stream==null)
             Toast.makeText(getApplicationContext(), "Please provide appropriate input", Toast.LENGTH_SHORT).show();
         else {
             user.put("Data",subjectCode.toUpperCase()+" "+ yearValue+ " "+ semesterValue);
+            user.put("Stream",stream);
+            user.put("Mid or End sem",midendsem);
             db.collection(users.getEmail())
                     .add(user)
                     .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -76,6 +127,8 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("subject",subjectCode);
             i.putExtra("year",yearValue);
             i.putExtra("semester",semesterValue);
+            i.putExtra("stream",stream);
+            i.putExtra("MidEnd",midendsem);
             startActivity(i);
         }
 

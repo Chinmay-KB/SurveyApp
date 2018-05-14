@@ -8,9 +8,12 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,14 +44,19 @@ public class interimActivity extends AppCompatActivity {
     ListView listView;
     String s[];
     List<String> namesList = new ArrayList<>();
+    List<String> streams=new ArrayList<>();
+    List<String> midendsems=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.landing_page);
+
         ConstraintLayout constraintLayout = findViewById(R.id.entryanim);
         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(5000);
-        animationDrawable.setExitFadeDuration(5000);
+        animationDrawable.setEnterFadeDuration(7000);
+        animationDrawable.setExitFadeDuration(8000);
         animationDrawable.start();
         FirebaseUser users= FirebaseAuth.getInstance().getCurrentUser();
         namev=(TextView)findViewById(R.id.textView6);
@@ -69,6 +77,8 @@ public class interimActivity extends AppCompatActivity {
                             {
                                String s=doc.getString("Data");
                                 namesList.add(s);
+                                streams.add("Stream");
+                                midendsems.add("Mid or End sem");
                             }
                         }
                         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.custom_list,namesList);
@@ -86,6 +96,8 @@ public class interimActivity extends AppCompatActivity {
                                 i.putExtra("subject",scode);
                                 i.putExtra("year",year);
                                 i.putExtra("semester",sem);
+                                i.putExtra("stream",streams.get(position));
+                                i.putExtra("midend",midendsems.get(position));
                                 startActivity(i);
 
                                 Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();

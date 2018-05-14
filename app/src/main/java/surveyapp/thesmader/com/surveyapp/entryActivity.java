@@ -1,13 +1,21 @@
 package surveyapp.thesmader.com.surveyapp;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,20 +53,46 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
     public TextView tv;
     public TextView tv1;
     public TextView tv2;
+    public RadioGroup stream1,stream2;
     public TextView tv3;
     public TextView tv4;
+    String stream,midend;
+    FloatingActionButton bs3,bs2;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String, Object> user = new HashMap<>();
     private CollectionReference notebookRef;
-
+    EditText s2,s3;
      @Override
     protected void onCreate(Bundle savedInstanceState) {
+         requestWindowFeature(Window.FEATURE_NO_TITLE);
+         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page_entry);
+         ConstraintLayout constraintLayout = findViewById(R.id.entry_anim);
+         AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
+         animationDrawable.setEnterFadeDuration(6000);
+         animationDrawable.setExitFadeDuration(6000);
+
+         bs3=findViewById(R.id.floatingActionButton6);
+         bs2=findViewById(R.id.floatingActionButton5);
         Intent i=getIntent();
         scode=i.getStringExtra("subject");
         yearValue=i.getStringExtra("year");
         semesterValue=i.getStringExtra("semester");
+        stream=i.getStringExtra("stream");
+        midend=i.getStringExtra("midend");
+        TextView subjectDisplay=(TextView) findViewById(R.id.textView10);
+        subjectDisplay.setText(scode);
+
+        s2=(EditText)findViewById(R.id.extra_paper_wastage3);
+        s3=(EditText)findViewById(R.id.extra_paper_wastage4);
+        s2.setVisibility(View.GONE);
+        s3.setVisibility(View.GONE);
+        //s2.setText(0);
+        //s3.setText(0);
+
+
         tv=(TextView)findViewById(R.id.textView);
         tv1=(TextView)findViewById(R.id.textView2);
         tv2=(TextView)findViewById(R.id.textView3);
@@ -146,11 +180,14 @@ public void onClick(View view)
                  EditText paper3=(EditText)findViewById(R.id.extra_paper_wastage3);
                  EditText paper4=(EditText)findViewById(R.id.extra_paper_wastage4);
 
-                if(!marks.getText().toString() .isEmpty() && !paper1.getText().toString().isEmpty() && !paper2.getText().toString().isEmpty() && !paper3.getText().toString().isEmpty() && !paper4.getText().toString().isEmpty()) {
+                if(!marks.getText().toString() .isEmpty() && !paper1.getText().toString().isEmpty() && !paper2.getText().toString().isEmpty())// &&  && !paper4.getText().toString().isEmpty()) {
+                {
                     marksValue=Integer.parseInt(marks.getText().toString());
                     mainValue=Integer.parseInt(paper1.getText().toString());
                     sup1=Integer.parseInt(paper2.getText().toString());
+                    if(!paper3.getText().toString().isEmpty())
                     sup2=Integer.parseInt(paper3.getText().toString());
+                    if(!paper4.getText().toString().isEmpty())
                     sup3=Integer.parseInt(paper4.getText().toString());
 
                     user.put("Year", yearValue);
@@ -158,8 +195,16 @@ public void onClick(View view)
                     user.put("marks", marksValue);
                     user.put("Main sheet wasted", mainValue);
                     user.put("Supplementary 1", sup1);
-                    user.put("Supplementary 2",sup2);
-                    user.put("Supplementary 3",sup3);
+                    user.put("Stream",stream);
+                    user.put("Mid or end sem",midend);
+                    if(paper3.getText().toString().isEmpty())
+                        user.put("Supplementary 2",0);
+                        else
+                            user.put("Supplementary 2",sup2);
+                    if(paper4.getText().toString().isEmpty())
+                    user.put("Supplementary 3",0);
+                        else
+                            user.put("Supplementary 3",sup3);
                     user.put("Index", index);
                     db.collection(scode)
                             .add(user)
@@ -187,9 +232,26 @@ public void onClick(View view)
                 else
                     Toast.makeText(getApplicationContext(), "Don't leave the fields blank",Toast.LENGTH_SHORT).show();
                // setContentView(R.layout.page_entry);
-
+    s2.setVisibility(View.GONE);
+    s3.setVisibility(View.GONE);
+    bs2.setVisibility(View.VISIBLE);
+    bs3.setVisibility(View.VISIBLE);
 
 }
+    public void streamChoice1(View view)
+    {
+        stream2.clearCheck();
+        int selectedId=stream1.getCheckedRadioButtonId();
+        RadioButton rb=findViewById(selectedId);
+        stream=rb.getText().toString();
+    }
+    public void streamChoice2(View view)
+    {
+        stream1.clearCheck();
+        int selectedId=stream2.getCheckedRadioButtonId();
+        RadioButton rb=findViewById(selectedId);
+        stream=rb.getText().toString();
+    }
 
 public void savingData(View view)
 {
@@ -268,6 +330,18 @@ public void updateUI(String key)
         tv4.setText(data[4]);
     index++;
 
+}
+public void pageAdd2(View view)
+    {
+
+        bs3.setVisibility(View.GONE);
+        s3.setVisibility(View.VISIBLE);
+    }
+public void pageAdd1(View view)
+{
+
+    bs2.setVisibility(View.GONE);
+    s2.setVisibility(View.VISIBLE);
 }
 public void onBackPressed(View view)
 {

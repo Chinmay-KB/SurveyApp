@@ -4,9 +4,11 @@
     android:id="@android:id/text1"
     android:paddingTop="20dp"
     android:paddingBottom="20dp"
+    android:paddingRight="10dp"
+    android:paddingLeft="10dp"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:textColor="#ffffff"
     android:fontFamily="@font/q"
     android:padding="5dp"
-    android:textSize="26sp" />
+    android:textSize="24sp" />
