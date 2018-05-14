@@ -73,7 +73,8 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
          AnimationDrawable animationDrawable = (AnimationDrawable) constraintLayout.getBackground();
          animationDrawable.setEnterFadeDuration(6000);
          animationDrawable.setExitFadeDuration(6000);
-
+         stream1=(RadioGroup)findViewById(R.id.stream1);
+         stream2=(RadioGroup)findViewById(R.id.stream2);
          bs3=findViewById(R.id.floatingActionButton6);
          bs2=findViewById(R.id.floatingActionButton5);
         Intent i=getIntent();
@@ -98,6 +99,35 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
         tv2=(TextView)findViewById(R.id.textView3);
         tv3=(TextView)findViewById(R.id.textView4);
         tv4=(TextView)findViewById(R.id.textView5);
+
+        RadioButton r1=(RadioButton)findViewById(R.id.btech);
+         RadioButton r2=(RadioButton)findViewById(R.id.ma);
+         RadioButton r3=(RadioButton)findViewById(R.id.mba);
+         RadioButton r4=(RadioButton)findViewById(R.id.barch);
+         RadioButton r5=(RadioButton)findViewById(R.id.msc);
+         RadioButton r6=(RadioButton)findViewById(R.id.dd);
+         RadioButton r7=(RadioButton)findViewById(R.id.imsc);
+         RadioButton r8=(RadioButton)findViewById(R.id.mres);
+         RadioButton r9=(RadioButton)findViewById(R.id.phd);
+         if(stream.equals("B.Tech"))
+             r1.setChecked(true);
+         if(stream.equals("M.A"))
+             r2.setChecked(true);
+         if(stream.equals("M.B.A"))
+             r3.setChecked(true);
+         if(stream.equals("B.Arch"))
+             r4.setChecked(true);
+         if(stream.equals("M.Sc"))
+             r5.setChecked(true);
+         if(stream.equals("Dual Degree"))
+             r6.setChecked(true);
+         if(stream.equals("Integrated M.Sc"))
+             r7.setChecked(true);
+         if(stream.equals("M.Tech(Res)"))
+             r8.setChecked(true);
+         if(stream.equals("Ph.D"))
+             r9.setChecked(true);
+
         data=new String[5];
         keyOfData=new String[5];
         notebookRef=db.collection(scode);
@@ -240,17 +270,20 @@ public void onClick(View view)
 }
     public void streamChoice1(View view)
     {
-        stream2.clearCheck();
-        int selectedId=stream1.getCheckedRadioButtonId();
-        RadioButton rb=findViewById(selectedId);
-        stream=rb.getText().toString();
+
+       int selectedId=stream1.getCheckedRadioButtonId();
+       Button rb1=(Button)findViewById(selectedId);
+       stream=rb1.getText().toString();
+        if(stream2.getCheckedRadioButtonId()!=-1)
+       stream2.clearCheck();
     }
     public void streamChoice2(View view)
     {
-        stream1.clearCheck();
         int selectedId=stream2.getCheckedRadioButtonId();
-        RadioButton rb=findViewById(selectedId);
-        stream=rb.getText().toString();
+        Button rb2=(Button)findViewById(selectedId);
+        stream=rb2.getText().toString();
+        if(stream1.getCheckedRadioButtonId()!=-1)
+       stream1.clearCheck();
     }
 
 public void savingData(View view)
