@@ -109,25 +109,6 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
          RadioButton r7=(RadioButton)findViewById(R.id.imsc);
          RadioButton r8=(RadioButton)findViewById(R.id.mres);
          RadioButton r9=(RadioButton)findViewById(R.id.phd);
-         if(stream.equals("B.Tech"))
-             r1.setChecked(true);
-         if(stream.equals("M.A"))
-             r2.setChecked(true);
-         if(stream.equals("M.B.A"))
-             r3.setChecked(true);
-         if(stream.equals("B.Arch"))
-             r4.setChecked(true);
-         if(stream.equals("M.Sc"))
-             r5.setChecked(true);
-         if(stream.equals("Dual Degree"))
-             r6.setChecked(true);
-         if(stream.equals("Integrated M.Sc"))
-             r7.setChecked(true);
-         if(stream.equals("M.Tech(Res)"))
-             r8.setChecked(true);
-         if(stream.equals("Ph.D"))
-             r9.setChecked(true);
-
         data=new String[5];
         keyOfData=new String[5];
         notebookRef=db.collection(scode);
