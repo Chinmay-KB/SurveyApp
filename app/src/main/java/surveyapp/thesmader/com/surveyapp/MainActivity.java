@@ -101,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
         if (yearValue.equals("Choose Year") || semesterValue.equals("Choose Semester") || midendsem==null || stream==null)
             Toast.makeText(getApplicationContext(), "Please provide appropriate input", Toast.LENGTH_SHORT).show();
         else {
-            user.put("Data",subjectCode.toUpperCase()+" "+ yearValue+ " "+ semesterValue);
+            user.put("Subject Code",subjectCode.toUpperCase());
+            user.put("Year",yearValue);
+            user.put("Semester",semesterValue);
             user.put("Stream",stream);
             user.put("Mid or End sem",midendsem);
             db.collection(users.getEmail())

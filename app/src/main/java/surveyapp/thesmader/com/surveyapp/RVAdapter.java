@@ -29,9 +29,17 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     }
 
     List<String> feature;
+    List<String> streams;
+    List<String> midendsems;
+    List<String> year;
+    List<String> semester;
 
-    RVAdapter(interimActivity interimActivity, List<String> feature){
+    RVAdapter(interimActivity interimActivity, List<String> feature, List<String> streams,List<String>midendsems, List<String>year,List<String >semester){
         this.feature = feature;
+        this.streams=streams;
+        this.midendsems=midendsems;
+        this.year=year;
+        this.semester=semester;
     }
 
     @Override
@@ -50,15 +58,11 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
             public void onClick(View v) {
                 int index=pvh.getAdapterPosition();
                 Intent in=new Intent(viewGroup.getContext(),entryActivity.class);
-                String item=feature.get(index);
-                int a=item.indexOf(" ");
-                String scode=item.substring(0,a);
-                String year=item.substring(a+1,a+4);
-                String sem=item.substring(a+4,item.length());
-                in.putExtra("subject",scode);
-                in.putExtra("year",year);
-                in.putExtra("semester",sem);
-                in.putExtra("source","interim");
+                in.putExtra("subject",feature.get(index));
+                in.putExtra("year",year.get(index));
+                in.putExtra("semester",semester.get(index));
+                in.putExtra("stream",streams.get(index));
+                in.putExtra("MidEnd",midendsems.get(index));
                 viewGroup.getContext().startActivity(in);
 
             }

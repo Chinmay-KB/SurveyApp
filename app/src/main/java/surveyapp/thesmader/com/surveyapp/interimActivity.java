@@ -51,6 +51,8 @@ public class interimActivity extends AppCompatActivity {
     List<String> namesList = new ArrayList<>();
     List<String> streams=new ArrayList<>();
     List<String> midendsems=new ArrayList<>();
+    List<String> year=new ArrayList<>();
+    List<String> semester=new ArrayList<>();
     RVAdapter adapter;
     private AppBarLayout mAppBarLayout;
     @Override
@@ -63,7 +65,7 @@ public class interimActivity extends AppCompatActivity {
         collapsingToolbarLayout.setTitle(users.getDisplayName());
         db=FirebaseFirestore.getInstance();
         db.collection(users.getEmail())
-                .whereGreaterThanOrEqualTo("Data"," ")
+                .whereGreaterThanOrEqualTo("Subject Code"," ")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -72,10 +74,12 @@ public class interimActivity extends AppCompatActivity {
                         {
                             for(DocumentSnapshot doc:task.getResult())
                             {
-                               String s=doc.getString("Data");
+                               String s=doc.getString("Subject Code");
                                 namesList.add(s);
-                                String otherdata=doc.getString("Stream")+ " "+doc.getString("Mid or End sem");
-                                streams.add(otherdata);
+                                midendsems.add(doc.getString("Mid or End sem"));
+                                streams.add(doc.getString("Stream"));
+                                year.add(doc.getString("Year"));
+                                semester.add(doc.getString("Semester"));
 
                             }
                         }
@@ -85,7 +89,7 @@ public class interimActivity extends AppCompatActivity {
                     }
                 });
         RecyclerView recyclerView=findViewById(R.id.lv);
-        adapter=new RVAdapter(this,namesList);
+        adapter=new RVAdapter(this,namesList,streams,midendsems,year,semester);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }

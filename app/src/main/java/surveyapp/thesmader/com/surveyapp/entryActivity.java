@@ -143,26 +143,24 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
          RadioButton r8=(RadioButton)findViewById(R.id.mres);
          RadioButton r9=(RadioButton)findViewById(R.id.phd);
 
-         if(!i.getStringExtra("source").equals("interim")) {
-             if (stream.equals("B.Tech"))
-                 r1.setChecked(true);
-             if (stream.equals("M.A"))
-                 r2.setChecked(true);
-             if (stream.equals("M.B.A"))
-                 r3.setChecked(true);
-             if (stream.equals("B.Arch"))
-                 r4.setChecked(true);
-             if (stream.equals("M.Sc"))
-                 r5.setChecked(true);
-             if (stream.equals("Integrated M.Sc"))
-                 r7.setChecked(true);
-             if (stream.equals("M.Tech(Res)"))
-                 r8.setChecked(true);
-             if (stream.equals("Dual Degree"))
-                 r6.setChecked(true);
-             if (stream.equals("Ph.D"))
-                 r9.setChecked(true);
-         }
+    if (stream.equals("B.Tech"))
+        r1.setChecked(true);
+    if (stream.equals("M.A"))
+        r2.setChecked(true);
+    if (stream.equals("M.B.A"))
+        r3.setChecked(true);
+    if (stream.equals("B.Arch"))
+        r4.setChecked(true);
+    if (stream.equals("M.Sc"))
+        r5.setChecked(true);
+    if (stream.equals("Integrated M.Sc"))
+        r7.setChecked(true);
+    if (stream.equals("M.Tech(Res)"))
+        r8.setChecked(true);
+    if (stream.equals("Dual Degree"))
+        r6.setChecked(true);
+    if (stream.equals("Ph.D"))
+        r9.setChecked(true);
 
          uiRef();
 
@@ -293,73 +291,6 @@ public void onClick(View view) {
 
 public void savingData(View view)
 {
-    user.put("Last Index", index);
-    user.put("Last Subject Code",scode);
-    user.put("Last Semester",semesterValue);
-    user.put("Last Year value",yearValue);
-    user.put("Index",-1);
-    if(keyOfData[0]!=null){
-    user.put("index0",xIndex[0]);
-    user.put("marks0",xMarks[0]);
-    user.put("main0",xMain[0]);
-    user.put("s10",xs1[0]);
-    user.put("s20",xs2[0]);
-    user.put("s30",xs3[0]);
-    user.put("key0",keyOfData[0]);
-}
-    if(keyOfData[1]!=null){
-        user.put("index1",xIndex[1]);
-        user.put("marks1",xMarks[1]);
-        user.put("main1",xMain[1]);
-        user.put("s11",xs1[1]);
-        user.put("s21",xs2[1]);
-        user.put("s31",xs3[1]);
-        user.put("key1",keyOfData[1]);
-    }
-    if(keyOfData[2]!=null){
-        user.put("index2",xIndex[2]);
-        user.put("marks2",xMarks[2]);
-        user.put("main2",xMain[2]);
-        user.put("s12",xs1[2]);
-        user.put("s22",xs2[2]);
-        user.put("s32",xs3[2]);
-        user.put("key2",keyOfData[2]);
-    }
-    if(keyOfData[3]!=null){
-
-        user.put("index3",xIndex[3]);
-        user.put("marks3",xMarks[3]);
-        user.put("main3",xMain[3]);
-        user.put("s13",xs1[3]);
-        user.put("s23",xs2[3]);
-        user.put("s33",xs3[3]);        user.put("key3",keyOfData[3]);
-    }
-    if(keyOfData[4]!=null){
-        user.put("index4",xIndex[4]);
-        user.put("marks4",xMarks[4]);
-        user.put("main4",xMain[4]);
-        user.put("s14",xs1[4]);
-        user.put("s24",xs2[4]);
-        user.put("s34",xs3[4]);
-        user.put("key4",keyOfData[4]);
-    }
-    db.collection(scode)
-            .document("Last Accessed")//Stores the credentials of the last worked upon tab
-            .set(user)
-            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d("FirestoreDemo","Document snapshot added!");
-
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w("FirestoreDemo","Error adding document",e);
-                }
-            });
-
     goBack(view);
 }
 public void updateUI(String key)
@@ -422,13 +353,13 @@ public void uiRef()
     tv0.setTextColor(Color.BLACK);
     tbrow0.addView(tv0);
     TextView tv1 = new TextView(this);
-    tv1.setText(" Marks     ");
+    tv1.setText(" Marks ");
     tv1.setTypeface(typeface);
     tv1.setTextSize(25);
     tv1.setTextColor(Color.BLACK);
     tbrow0.addView(tv1);
     TextView tv2 = new TextView(this);
-    tv2.setText("Main sheet  ");
+    tv2.setText(" Main ");
     tv2.setTextSize(25);
     tv2.setTypeface(typeface);
     tv2.setTextColor(Color.BLACK);
