@@ -35,10 +35,20 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+
+import javax.xml.datatype.Duration;
 
 /**
  * Created by Chinmay on 02-05-2018.
@@ -53,7 +63,18 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
     public static int sup1;
     public static int sup2;
     public static int sup3;
+
+    EditText marks;
+    EditText paper1;
+    EditText paper2;
+    EditText paper3;
+    EditText paper4;
+
+    int editIndex;
+
+    FloatingActionButton tableEditButton;
     public int index;
+    List<String> a;
     int xIndex[],xMarks[],xMain[],xs1[],xs2[],xs3[];
     public String[] data;
     public String[] keyOfData;
@@ -78,6 +99,7 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
         xs1=new int[5];
         xs2=new int[5];
         xs3=new int[5];
+
         for(int i=0;i<4;i++)
         {
             xs1[i]=0;
@@ -85,16 +107,19 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
             xs3[1]=0;
         }
         setContentView(R.layout.page_entry);
+        tableEditButton=(FloatingActionButton)findViewById(R.id.tableEditButton);
+        tableEditButton.setVisibility(View.GONE);
          stream1=(RadioGroup)findViewById(R.id.stream1);
          stream2=(RadioGroup)findViewById(R.id.stream2);
          bs3=findViewById(R.id.floatingActionButton6);
          bs2=findViewById(R.id.floatingActionButton5);
         Intent i=getIntent();
         scode=i.getStringExtra("subject");
+
         yearValue=i.getStringExtra("year");
         semesterValue=i.getStringExtra("semester");
         stream=i.getStringExtra("stream");
-        midend=i.getStringExtra("midend");
+        midend=i.getStringExtra("MidEnd");
         TextView subjectDisplay=(TextView) findViewById(R.id.textView10);
         subjectDisplay.setText(scode);
 
@@ -103,8 +128,12 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
         s2.setVisibility(View.GONE);
         s3.setVisibility(View.GONE);
 
+        data=new String[5];
+        keyOfData=new String[5];
+        notebookRef=db.collection(scode);
+        index=0;
 
-        RadioButton r1=(RadioButton)findViewById(R.id.btech);
+         RadioButton r1=(RadioButton)findViewById(R.id.btech);
          RadioButton r2=(RadioButton)findViewById(R.id.ma);
          RadioButton r3=(RadioButton)findViewById(R.id.mba);
          RadioButton r4=(RadioButton)findViewById(R.id.barch);
@@ -113,97 +142,79 @@ public class entryActivity extends AppCompatActivity implements View.OnClickList
          RadioButton r7=(RadioButton)findViewById(R.id.imsc);
          RadioButton r8=(RadioButton)findViewById(R.id.mres);
          RadioButton r9=(RadioButton)findViewById(R.id.phd);
-        data=new String[5];
-        keyOfData=new String[5];
-        notebookRef=db.collection(scode);
-        index=0;
-        DocumentReference docRef = db.collection(scode).document("Last Accessed");
-        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
 
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if(document.exists()){
-                    if (document != null) {
-                        Log.d("", "DocumentSnapshot data: " + task.getResult().getData());
-                        String interimID =task.getResult().getData().get("Last Index").toString();
-                        if(interimID!=null) {
-                            index = Integer.parseInt(interimID);
-                        }
-                        if(task.getResult().getData().get("key0")!=null)
-                        {
-                            xIndex[0]=Integer.parseInt(task.getResult().getData().get("index0").toString());
-                            xMarks[0]=Integer.parseInt(task.getResult().getData().get("marks0").toString());
-                            xMain[0]=Integer.parseInt(task.getResult().getData().get("main0").toString());
-                            xs1[0]=Integer.parseInt(task.getResult().getData().get("s10").toString());
-                            xs2[0]=Integer.parseInt(task.getResult().getData().get("s20").toString());
-                            xs3[0]=Integer.parseInt(task.getResult().getData().get("s30").toString());
-                            String k0=task.getResult().getData().get("key0").toString();
-                            keyOfData[0]=k0;
-                        }
-                        if(task.getResult().getData().get("key1")!=null)
-                        {
-                            xIndex[1]=Integer.parseInt(task.getResult().getData().get("index1").toString());
-                            xMarks[1]=Integer.parseInt(task.getResult().getData().get("marks1").toString());
-                            xMain[1]=Integer.parseInt(task.getResult().getData().get("main1").toString());
-                            xs1[1]=Integer.parseInt(task.getResult().getData().get("s11").toString());
-                            xs2[1]=Integer.parseInt(task.getResult().getData().get("s21").toString());
-                            xs3[1]=Integer.parseInt(task.getResult().getData().get("s31").toString());
-                            String k1=task.getResult().getData().get("key1").toString();
-                            keyOfData[1]=k1;
-                        }
-                        if(task.getResult().getData().get("key2")!=null)
-                        {
-                            xIndex[2]=Integer.parseInt(task.getResult().getData().get("index2").toString());
-                            xMarks[2]=Integer.parseInt(task.getResult().getData().get("marks2").toString());
-                            xMain[2]=Integer.parseInt(task.getResult().getData().get("main2").toString());
-                            xs1[2]=Integer.parseInt(task.getResult().getData().get("s12").toString());
-                            xs2[2]=Integer.parseInt(task.getResult().getData().get("s22").toString());
-                            xs3[2]=Integer.parseInt(task.getResult().getData().get("s32").toString());
-                            String k2=task.getResult().getData().get("key2").toString();
-                            keyOfData[2]=k2;
-                        }
-                        if(task.getResult().getData().get("key3")!=null)
-                        {
-                            xIndex[3]=Integer.parseInt(task.getResult().getData().get("index3").toString());
-                            xMarks[3]=Integer.parseInt(task.getResult().getData().get("marks3").toString());
-                            xMain[3]=Integer.parseInt(task.getResult().getData().get("main3").toString());
-                            xs1[3]=Integer.parseInt(task.getResult().getData().get("s13").toString());
-                            xs2[3]=Integer.parseInt(task.getResult().getData().get("s23").toString());
-                            xs3[3]=Integer.parseInt(task.getResult().getData().get("s33").toString());
-                            String k3=task.getResult().getData().get("key3").toString();
-                            keyOfData[3]=k3;
-                        }
-                        if(task.getResult().getData().get("key4")!=null)
-                        {
-                            xIndex[4]=Integer.parseInt(task.getResult().getData().get("index4").toString());
-                            xMarks[4]=Integer.parseInt(task.getResult().getData().get("marks4").toString());
-                            xMain[4]=Integer.parseInt(task.getResult().getData().get("main4").toString());
-                            xs1[4]=Integer.parseInt(task.getResult().getData().get("s14").toString());
-                            xs2[4]=Integer.parseInt(task.getResult().getData().get("s24").toString());
-                            xs3[4]=Integer.parseInt(task.getResult().getData().get("s34").toString());
-                            String k4=task.getResult().getData().get("key4").toString();
-                            keyOfData[4]=k4;
-                        }
-                        } else {
-                        Log.d("FirestoreDemo", "No such document");
+         if(!i.getStringExtra("source").equals("interim")) {
+             if (stream.equals("B.Tech"))
+                 r1.setChecked(true);
+             if (stream.equals("M.A"))
+                 r2.setChecked(true);
+             if (stream.equals("M.B.A"))
+                 r3.setChecked(true);
+             if (stream.equals("B.Arch"))
+                 r4.setChecked(true);
+             if (stream.equals("M.Sc"))
+                 r5.setChecked(true);
+             if (stream.equals("Integrated M.Sc"))
+                 r7.setChecked(true);
+             if (stream.equals("M.Tech(Res)"))
+                 r8.setChecked(true);
+             if (stream.equals("Dual Degree"))
+                 r6.setChecked(true);
+             if (stream.equals("Ph.D"))
+                 r9.setChecked(true);
+         }
+
+         uiRef();
+
+    }
+
+    public void editTableSave(View view) {
+        if (!marks.getText().toString().isEmpty() && !paper1.getText().toString().isEmpty() && !paper2.getText().toString().isEmpty())// &&  && !paper4.getText().toString().isEmpty()) {
+        {
+            marksValue = Integer.parseInt(marks.getText().toString());
+            mainValue = Integer.parseInt(paper1.getText().toString());
+            sup1 = Integer.parseInt(paper2.getText().toString());
+            if (!paper3.getText().toString().isEmpty())
+                sup2 = Integer.parseInt(paper3.getText().toString());
+            if (!paper4.getText().toString().isEmpty())
+                sup3 = Integer.parseInt(paper4.getText().toString());
+            xMarks[editIndex]=marksValue;
+            xMain[editIndex]=mainValue;
+            xs1[editIndex]=sup1;
+            xs2[editIndex]=sup2;
+            xs3[editIndex]=sup3;
+        }
+        DocumentReference tEdit=db.collection(scode).document(keyOfData[editIndex]);
+        tEdit.update("marks",marksValue);
+        tEdit.update("Main sheet wasted",mainValue);
+        tEdit.update("Supplementary 1",sup1);
+        tEdit.update("Supplementary 2",sup2);
+        tEdit.update("Supplementary 3",sup3)
+                .addOnSuccessListener(new OnSuccessListener<Void>(){
+
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(entryActivity.this,"Updation successful",Toast.LENGTH_SHORT).show();
                     }
-                } else {
-                        Log.d("FirestoreDemo", "get failed with ", task.getException());
-                    }
-                }
-            }
-    });
+                });
+        tableEditButton.setVisibility(View.GONE);
         uiRef();
     }
 
+
+
+
 public void onClick(View view) {
-    EditText marks = (EditText) findViewById(R.id.marks_entry);
-    EditText paper1 = (EditText) findViewById(R.id.main_paper_wastage);
-    EditText paper2 = (EditText) findViewById(R.id.extra_paper_wastage);
-    EditText paper3 = (EditText) findViewById(R.id.extra_paper_wastage3);
-    EditText paper4 = (EditText) findViewById(R.id.extra_paper_wastage4);
+
+    marks = (EditText) findViewById(R.id.marks_entry);
+
+    paper1 = (EditText) findViewById(R.id.main_paper_wastage);
+
+    paper2 = (EditText) findViewById(R.id.extra_paper_wastage);
+
+    paper3 = (EditText) findViewById(R.id.extra_paper_wastage3);
+
+    paper4 = (EditText) findViewById(R.id.extra_paper_wastage4);
     String key;
     if (!marks.getText().toString().isEmpty() && !paper1.getText().toString().isEmpty() && !paper2.getText().toString().isEmpty())// &&  && !paper4.getText().toString().isEmpty()) {
     {
@@ -355,8 +366,7 @@ public void updateUI(String key)
 {
     if(index<5)
     {
-       // data[index]="#"+ Integer.toString(index+1)+" Marks:"+ Integer.toString(marksValue)+" Main "+ Integer.toString(mainValue)+" S1 "+ Integer.toString(sup1)+ " S2 "+ Integer.toString(sup2)+ " S3 "+Integer.toString(sup3);
-        keyOfData[index]=key;
+       keyOfData[index]=key;
         xIndex[index]=index+1;
         xMarks[index]=marksValue;
         xMain[index]=mainValue;
@@ -384,7 +394,6 @@ public void updateUI(String key)
         }
 
         keyOfData[4]=key;
-        //data[4]="#"+ Integer.toString(index+1)+" Marks:"+ Integer.toString(marksValue)+" Main "+ Integer.toString(mainValue)+" S1 "+ Integer.toString(sup1)+ " S2 "+ Integer.toString(sup2)+ " S3 "+Integer.toString(sup3);
         xIndex[4]=index+1;
         xMarks[4]=marksValue;
         xMain[4]=mainValue;
@@ -409,36 +418,36 @@ public void uiRef()
     TextView tv0 = new TextView(this);
     tv0.setTypeface(typeface);
     tv0.setText(" Sl.No ");
-    tv0.setTextSize(20);
+    tv0.setTextSize(25);
     tv0.setTextColor(Color.BLACK);
     tbrow0.addView(tv0);
     TextView tv1 = new TextView(this);
     tv1.setText(" Marks     ");
     tv1.setTypeface(typeface);
-    tv1.setTextSize(20);
+    tv1.setTextSize(25);
     tv1.setTextColor(Color.BLACK);
     tbrow0.addView(tv1);
     TextView tv2 = new TextView(this);
     tv2.setText("Main sheet  ");
-    tv2.setTextSize(20);
+    tv2.setTextSize(25);
     tv2.setTypeface(typeface);
     tv2.setTextColor(Color.BLACK);
     tbrow0.addView(tv2);
     TextView tv3 = new TextView(this);
     tv3.setText("  S1   ");
     tv3.setTextColor(Color.BLACK);
-    tv3.setTextSize(20);
+    tv3.setTextSize(25);
     tv3.setTypeface(typeface);
     tbrow0.addView(tv3);
     TextView tv4 = new TextView(this);
-    tv4.setTextSize(20);
+    tv4.setTextSize(25);
     tv4.setText("  S2   ");
     tv4.setTypeface(typeface);
     tv4.setTextColor(Color.BLACK);
     tbrow0.addView(tv4);
     TextView tv5 = new TextView(this);
     tv5.setText("  S3   ");
-    tv5.setTextSize(20);
+    tv5.setTextSize(25);
     tv5.setTypeface(typeface);
     tv5.setTextColor(Color.BLACK);
     tbrow0.addView(tv5);
@@ -451,10 +460,10 @@ public void uiRef()
     for (int i = 0; i <limit; i++) {
         TableRow tbrow = new TableRow(this);
         TextView t1v = new TextView(this);
-
+        tbrow.setId(i);
         t1v.setText(Integer.toString(xIndex[i]));
         t1v.setTextColor(Color.BLACK);
-        t1v.setTextSize(20);
+        t1v.setTextSize(24);
         t1v.setTypeface(typeface);
         t1v.setGravity(Gravity.CENTER);
         tbrow.addView(t1v);
@@ -462,28 +471,28 @@ public void uiRef()
         t2v.setText(Integer.toString(xMarks[i]));
         t2v.setTextColor(Color.BLACK);
         t2v.setTypeface(typeface);
-        t2v.setTextSize(20);
+        t2v.setTextSize(24);
         t2v.setGravity(Gravity.CENTER);
         tbrow.addView(t2v);
         TextView t3v = new TextView(this);
         t3v.setText(Integer.toString(xMain[i]));
         t3v.setTextColor(Color.BLACK);
         t3v.setTypeface(typeface);
-        t3v.setTextSize(20);
+        t3v.setTextSize(24);
         t3v.setGravity(Gravity.CENTER);
         tbrow.addView(t3v);
         TextView t4v = new TextView(this);
         t4v.setText(Integer.toString(xs1[i]));
         t4v.setTextColor(Color.BLACK);
         t4v.setTypeface(typeface);
-        t4v.setTextSize(20);
+        t4v.setTextSize(24);
         t4v.setGravity(Gravity.CENTER);
         tbrow.addView(t4v);
         TextView t5v= new TextView(this);
         t5v.setText(Integer.toString(xs2[i]));
         t5v.setTextColor(Color.BLACK);
         t5v.setTypeface(typeface);
-        t5v.setTextSize(20);
+        t5v.setTextSize(24);
         t5v.setGravity(Gravity.CENTER);
         tbrow.addView(t5v);
         TextView t6v = new TextView(this);
@@ -491,10 +500,37 @@ public void uiRef()
         t6v.setTextColor(Color.BLACK);
         t6v.setTypeface(typeface);
         t6v.setGravity(Gravity.CENTER);
-        t6v.setTextSize(20);
+        t6v.setTextSize(24);
         tbrow.addView(t6v);
         stk.addView(tbrow);
+        tbrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                v.setBackgroundColor(getResources().getColor(R.color.selection));
+                int k=v.getId();
+                Toast.makeText(entryActivity.this,Integer.toString(k),Toast.LENGTH_SHORT).show();
+                editTable(k);
+            }
+        });
     }
+}
+public void editTable(int keyValue)
+{
+    tableEditButton.setVisibility(View.VISIBLE);
+
+    if(keyValue>4)
+    {
+        keyValue=4-xIndex[4]-keyValue;
+        editIndex=keyValue;
+    }
+    else editIndex=keyValue;
+
+    marks.setText(Integer.toString(xMarks[keyValue]),TextView.BufferType.EDITABLE);
+    paper1.setText(Integer.toString(xMain[keyValue]),TextView.BufferType.EDITABLE);
+    paper2.setText(Integer.toString(xs1[keyValue]),TextView.BufferType.EDITABLE);
+    paper3.setText(Integer.toString(xs2[keyValue]),TextView.BufferType.EDITABLE);
+    paper4.setText(Integer.toString(xs3[keyValue]),TextView.BufferType.EDITABLE);
+
 }
 public void pageAdd2(View view)
     {

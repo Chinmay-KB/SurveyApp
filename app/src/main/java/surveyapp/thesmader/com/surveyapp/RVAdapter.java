@@ -58,6 +58,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
                 in.putExtra("subject",scode);
                 in.putExtra("year",year);
                 in.putExtra("semester",sem);
+                in.putExtra("source","interim");
                 viewGroup.getContext().startActivity(in);
 
             }

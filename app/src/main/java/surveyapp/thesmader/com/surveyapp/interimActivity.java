@@ -61,10 +61,6 @@ public class interimActivity extends AppCompatActivity {
        final TextView namev=(TextView)findViewById(R.id.display_name);
         CollapsingToolbarLayout collapsingToolbarLayout=findViewById(R.id.collapsing_toolbar);
         collapsingToolbarLayout.setTitle(users.getDisplayName());
-        //mailv=(TextView)findViewById(R.id.textView7);
-       // namev.setText(users.getDisplayName());
-       // mailv.setText(users.getEmail());
-        //listView=(ListView)findViewById(R.id.lv);
         db=FirebaseFirestore.getInstance();
         db.collection(users.getEmail())
                 .whereGreaterThanOrEqualTo("Data"," ")
@@ -84,40 +80,14 @@ public class interimActivity extends AppCompatActivity {
                             }
                         }
 
-                        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.custom_list,R.id.subject_code,namesList);
-                        adapter.notifyDataSetChanged();
-                      /* listView.setAdapter(adapter);
-                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                String item = ((TextView)view).getText().toString();
-                                int a=item.indexOf(" ");
-                                String scode=item.substring(0,a);
-                                String year=item.substring(a+1,a+4);
-                                String sem=item.substring(a+4,item.length());
-                                Intent i=new Intent(getApplicationContext(), entryActivity.class);
-                                i.putExtra("subject",scode);
-                                i.putExtra("year",year);
-                                i.putExtra("semester",sem);
-                                i.putExtra("stream",streams.get(position));
-                                i.putExtra("midend",midendsems.get(position));
-                                startActivity(i);
+                         adapter.notifyDataSetChanged();
 
-                                Toast.makeText(getBaseContext(), item, Toast.LENGTH_LONG).show();
-
-                            }
-                        }); */
                     }
                 });
         RecyclerView recyclerView=findViewById(R.id.lv);
         adapter=new RVAdapter(this,namesList);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        //adapter.setClickListener(this);
-
-
-
     }
 
 

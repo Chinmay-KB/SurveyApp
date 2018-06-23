@@ -44,9 +44,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        midendsem="Mid Semester";
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        stream="B.Tech";
         stream1=(RadioGroup)findViewById(R.id.stream1);
         stream2=(RadioGroup)findViewById(R.id.stream2);
         mAuth = FirebaseAuth.getInstance();
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
             i.putExtra("semester",semesterValue);
             i.putExtra("stream",stream);
             i.putExtra("MidEnd",midendsem);
+            i.putExtra("source","main");
             startActivity(i);
         }
 

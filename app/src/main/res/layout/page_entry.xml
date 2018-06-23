@@ -597,7 +597,24 @@
                         app:layout_constraintHorizontal_bias="0.583"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.67" /><![CDATA[
+                        app:layout_constraintVertical_bias="0.67" />
+
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/tableEditButton"
+                        android:layout_width="57dp"
+                        android:layout_height="49dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:clickable="true"
+                        android:onClick="editTableSave"
+                        app:layout_constraintBottom_toTopOf="@+id/extra_paper_wastage4"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.972"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@android:drawable/ic_menu_add" /><![CDATA[
 
             ="parent"
          "#7fa87f"
@@ -633,7 +650,7 @@
                 <TableLayout
                     android:id="@+id/table_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginBottom="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginStart="8dp"
